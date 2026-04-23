@@ -1,5 +1,10 @@
 {
-  "fitur": [],
+  "fitur": [
+    {
+      "cmd": "/danafake",
+      "code": "bot.onText(/^\\/fakedana(?:\\s+(.+))?$/, async (msg, match) => {\n  const chatId = msg.chat.id;\n  const messageId = msg.message_id;\n  const input = match[1];\n\n  try {\n    if (!input) {\n      return bot.sendMessage(chatId, <blockquote><b>⚠️ MASUKKAN NOMINAL</b></blockquote>\\n\\n<b>Contoh:</b> <code>/fakedana 500.000</code>, { \n        parse_mode: \"HTML\",\n        reply_to_message_id: messageId \n      });\n    }\n\n    // Membersihkan input agar hanya angka\n    const nominalClean = input.replace(/[^0-9]/g, \"\");\n    \n    if (!nominalClean) {\n      return bot.sendMessage(chatId, <blockquote><b>❌ NOMINAL TIDAK VALID</b></blockquote>, { \n        parse_mode: \"HTML\",\n        reply_to_message_id: messageId \n      });\n    }\n\n    const formatted = Number(nominalClean).toLocaleString(\"id-ID\");\n\n    await bot.sendMessage(chatId, <blockquote><b>💸 SEDANG MEMPROSES...</b></blockquote>\\n<i>Mohon tunggu, sedang membuat tampilan bukti dana.</i>, { \n      parse_mode: \"HTML\",\n      reply_to_message_id: messageId \n    });\n\n    const url = https://api.zenzxz.my.id/maker/fakedanav2?nominal=${encodeURIComponent(formatted)};\n    const res = await axios.get(url, { responseType: \"arraybuffer\" });\n\n    await bot.sendPhoto(chatId, Buffer.from(res.data), {\n      caption: <blockquote><b>💰 FAKE DANA BERHASIL</b></blockquote>\\n\\n<b>Nominal:</b> <code>Rp${formatted}</code>\\n<b>Status:</b> Sukses Dibuat,\n      parse_mode: \"HTML\",\n      reply_to_message_id: messageId\n    });\n\n  } catch (err) {\n    console.error(err);\n    bot.sendMessage(chatId, <blockquote><b>❌ TERJADI KESALAHAN</b></blockquote>\\n<code>${err.message}</code>, { \n      parse_mode: \"HTML\",\n      reply_to_message_id: messageId \n    });\n  }\n});"
+    }
+  ],
   "akses": [
     {
       "password": "GalaxyMd",
